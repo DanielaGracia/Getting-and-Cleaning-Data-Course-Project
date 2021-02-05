@@ -73,8 +73,8 @@ Data <- Data[grepl("subject|activity|\\mean()\\b|std()", colnames(Data))]
 # we define activity variable as a factor and then reset the levels with the names
 # instead of the numbers
 
-Data$Activity <- as.factor(Data$Activity)
-levels(Data$Activity) <- activityLabels[,2]
+Data$activity <- as.factor(Data$activity)
+levels(Data$activity) <- activityLabels[,2]
 
 # 4.2 Appropriately labels the data set with descriptive variable names.
 
@@ -85,15 +85,15 @@ temp <- gsub("-","",temp)
 temp <- gsub("()","",temp, fixed = TRUE)
 temp <- gsub("mean", "Mean", temp)
 temp <- gsub("std", "Std", temp)
-temp <- gsub("^t","Time", temp)
-temp <- gsub("^f","Fourier", temp)
+temp <- gsub("^t","time", temp)
+temp <- gsub("^f","fourier", temp)
 temp <- gsub("BodyBody","Body", temp)
 names(Data) <- temp
 
 # 5. From the previous data set, create a second, independent tidy data set 
 # with the average of each variable for each activity and each subject.
 
-tidyData <- Data %>% group_by(SubjectID,Activity) %>% 
+tidyData <- Data %>% group_by(subject,activity) %>% 
         summarise_each(mean)
 
 # finally we export tidyData frame as a text file & store it in the work directory
